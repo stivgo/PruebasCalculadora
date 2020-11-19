@@ -324,9 +324,9 @@ public class CalculadoraIT {
         
         a = 6.2F;
         b = 10.1F;
-        expResult = 360F;
+        expResult = 7.8053442E10F;
         result = Calculadora.tenPow(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
 
     }
     
@@ -338,23 +338,23 @@ public class CalculadoraIT {
         System.out.println("sqrt");
         float a = 4F;
         float expResult = 2F;
-        //float result = Calculadora.sqrt(a);
-        //assertEquals(expResult, result, 0.0);
+        float result = Calculadora.sqrt(a);
+        assertEquals(expResult, result, 0.0);
         
         a = -27F;
-        expResult = 2F;
-        //result = Calculadora.sqrt(a);
-        //assertEquals(expResult, result, 0.0);
+        expResult = Float.NaN;
+        result = Calculadora.sqrt(a);
+        assertEquals(expResult, result, 0.0);
         
         a = 0F;
         expResult = 0F;
-        //result = Calculadora.sqrt(a);
-        //assertEquals(expResult, result, 0.0);
+        result = Calculadora.sqrt(a);
+        assertEquals(expResult, result, 0.0);
         
         a = 650.25F;
         expResult = 25.5F;
-        //result = Calculadora.sqrt(a);
-        //assertEquals(expResult, result, 0.0);
+        result = Calculadora.sqrt(a);
+        assertEquals(expResult, result, 0.0);
         
     }
     
@@ -380,9 +380,9 @@ public class CalculadoraIT {
         assertEquals(expResult, result, 0.0);
         
         a = 2.5F;
-        expResult = 1F;
+        expResult = Float.NaN;
         result = Calculadora.nFact(a);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
     }
     
     /**
@@ -393,18 +393,18 @@ public class CalculadoraIT {
         System.out.println("log");
         float a = 100F;
         float expResult = 2F;
-        //float result = Calculadora.log(a);
-        //assertEquals(expResult, result, 0.0);
+        float result = Calculadora.log(a);
+        assertEquals(expResult, result, 0.0);
         
         a = 0F;
-        expResult = 4F;
-        //result = Calculadora.log(a);
-        //assertEquals(expResult, result, 0.0);
+        expResult = Float.NaN;
+        result = Calculadora.log(a);
+        assertEquals(expResult, result, 0.0);
         
         a = -5F;
-        expResult = 0F;
-        //result = Calculadora.log(a);
-        //assertEquals(expResult, result, 0.0);
+        expResult = Float.NaN;
+        result = Calculadora.log(a);
+        assertEquals(expResult, result, 0.0);
         
     }
     

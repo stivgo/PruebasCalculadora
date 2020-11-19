@@ -5,44 +5,83 @@
  */
 package businessLogic;
 
+import java.util.Stack;
+
 /**
  *
  * @author Anabel
  */
 public class Calculadora {
     
+    private static Stack<Float> resultStack = new Stack<Float>();
+    
+    private static void storeResult(Float a){
+        resultStack.push(a);
+    }
+    
     public static float add(float a, float b)
     {
+        storeResult(a+b);
         return a+b;
     }
     
     public static float substract(float a, float b)
     {
+        storeResult(a-b);
         return a-b;
     }
     
     public static float multiply(float a, float b)
     {
+        storeResult(a*b);
         return a*b;
     }
     
     public static float div(float a, float b)
     {
+        if ( b == 0 ){
+            storeResult(Float.NaN);
+            return Float.NaN;
+        }
+        storeResult(a/b);
         return a/b;
     }
     
     public static String back()
     {
-        return "";
+        
+        if ( !resultStack.empty() ){
+            double res = resultStack.pop();
+            return res+"";
+        }
+        else{
+            return "";
+        }
+        
+    }
+    
+    private static boolean isInteger(float x){
+        if ( x < 0 ){
+            x *= -1;
+        }
+        return ( x == Math.ceil(x) );
     }
     
     public static float module (float a, float b)
     {
+        if ( !isInteger(a) || !isInteger(b) ){
+            storeResult(Float.NaN);
+            return Float.NaN;
+        }
+        if ( b == 0 ){
+            return Float.NaN;
+        }
         return a%b;
     }
     
     public static float signo(float a)
     {
+        storeResult(a*-1);
         return a*-1;
     }
     
@@ -53,22 +92,29 @@ public class Calculadora {
     
     public static float tenPow(float a, float b)
     {
+        storeResult(a*((float)Math.pow(10, b)));
         return a*((float)Math.pow(10, b));
     }
     
-    public static float sqrt(float a, float b)
+    public static float sqrt(float a)
     {
-        if(a==0){
-            return 1;
-        }else{
-            return (float)Math.pow(b,1/a);
+        if ( a<0 ){
+            storeResult(Float.NaN);
+            return Float.NaN;
         }
+        storeResult((float)Math.sqrt(a));
+        return (float)Math.sqrt(a);
         
     }
     
     public static float nFact(float a)
     {
+        if ( !isInteger(a) ){
+            storeResult(Float.NaN);
+            return Float.NaN;
+        }
         if (a == 0){
+            storeResult(new Float(1));
             return 1;
         }
         float n = 1;
@@ -79,12 +125,17 @@ public class Calculadora {
         for (int i=1;i<=a;i++){
             n=n*i;
         }
-        
+        storeResult(n);
         return n;
     }
     
-    public static float log(float a, float b)
+    public static float log(float a)
     {
-        return (float)Math.log10(a) /(float)Math.log10(b);
+        if ( a <= 0 ){
+            storeResult(Float.NaN);
+            return Float.NaN;
+        }
+        storeResult((float)Math.log10(a));
+        return (float)Math.log10(a);
     }
 }

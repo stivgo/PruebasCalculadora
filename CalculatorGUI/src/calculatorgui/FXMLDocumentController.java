@@ -101,8 +101,18 @@ public class FXMLDocumentController implements Initializable {
     @FXML
     private TextField display;
     
+    private boolean clearScreen = false;
+    
+    private void calculateDirectly(){
+        equals.fire();
+    }
+
     @FXML
     private void handleButtonAction(ActionEvent event) {
+        if ( clearScreen ){
+            display.setText("");
+        }
+        clearScreen = false;
         
         if (event.getSource() == one) {
             display.setText(display.getText() + "1");
@@ -138,9 +148,7 @@ public class FXMLDocumentController implements Initializable {
                 data = Float.parseFloat(display.getText());
                 operation = 2; //Substraction
                 display.setText("");
-            }
-            
-            
+            }            
         } else if (event.getSource() == mult) {
             data = Float.parseFloat(display.getText());
             operation = 3; //Mul
@@ -150,9 +158,8 @@ public class FXMLDocumentController implements Initializable {
             operation = 4; //Division
             display.setText("");
         }else if (event.getSource() == back) {
-            data = Float.parseFloat(display.getText());
             operation = 5; //Back
-            display.setText("");
+            calculateDirectly();
         }else if (event.getSource() == mod) {
             data = Float.parseFloat(display.getText());
             operation = 6; //Module
@@ -161,12 +168,11 @@ public class FXMLDocumentController implements Initializable {
             data = Float.parseFloat(display.getText());
             operation = 7; //Signo
             display.setText("");
+            calculateDirectly();
         }else if (event.getSource() == coma) {
-            if (cont == 0){
+            if ( !display.getText().contains(".") ){
                 display.setText(display.getText() + ".");
-                cont++;
-            }
-             
+            }             
         }else if (event.getSource() == tenPow) {
             data = Float.parseFloat(display.getText());
             operation = 9; //tenPow
@@ -175,14 +181,17 @@ public class FXMLDocumentController implements Initializable {
             data = Float.parseFloat(display.getText());
             operation = 10; //sqrt
             display.setText("");
+            calculateDirectly();
         }else if (event.getSource() == nFact) {
             data = Float.parseFloat(display.getText());
             operation = 11; //nFact
             display.setText("");
+            calculateDirectly();
         }else if (event.getSource() == log) {
             data = Float.parseFloat(display.getText());
             operation = 12; //log
             display.setText("");
+            calculateDirectly();
         }
         else if (event.getSource() == equals) {
             cont = 0;
@@ -223,20 +232,20 @@ public class FXMLDocumentController implements Initializable {
                     ans = Calculadora.tenPow(data, secondOperand);
                     display.setText(String.valueOf(ans));break;
                 case 10: //sqrt
-                    secondOperand = Float.parseFloat(display.getText());
-                    ans = Calculadora.sqrt(data, secondOperand);
+                    //secondOperand = Float.parseFloat(display.getText());
+                    ans = Calculadora.sqrt(data);
                     display.setText(String.valueOf(ans));break;
                 case 11: //nFact
                     ans = Calculadora.nFact(data);
                     display.setText(String.valueOf(ans));break;
                 case 12: //Log
-                    secondOperand = Float.parseFloat(display.getText());
-                    ans = Calculadora.log(data, secondOperand);
-                    display.setText(String.valueOf(ans));break;
-                
-               
+                    //secondOperand = Float.parseFloat(display.getText());
+                    ans = Calculadora.log(data);
+                    display.setText(String.valueOf(ans));break;              
             }
+            clearScreen = true;
         }
+        
     }
     
     @Override
