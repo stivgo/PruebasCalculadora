@@ -190,15 +190,15 @@ public class CalculadoraIT {
         
         a = 58F;
         b = 0F;
-        expResult = 0F;
+        expResult = Float.NaN;
         result = Calculadora.div(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
         
         a = 0F;
         b = 0F;
-        expResult = 0F;
+        expResult = Float.NaN;
         result = Calculadora.div(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
         
     }
     
@@ -234,21 +234,21 @@ public class CalculadoraIT {
         
         a = 5.8F;
         b = 2F;
-        expResult = -2F;
+        expResult = Float.NaN;
         result = Calculadora.module(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
         
         a = 8F;
         b = 2.5F;
-        expResult = -2F;
+        expResult = Float.NaN;
         result = Calculadora.module(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
         
         a = 85F;
         b = 0F;
-        expResult = -2F;
+        expResult = Float.NaN;
         result = Calculadora.module(a, b);
-        //assertEquals(expResult, result, 0.0);
+        assertEquals(expResult, result, 0.0);
         
         a = 0F;
         b = 96F;
@@ -408,4 +408,97 @@ public class CalculadoraIT {
         
     }
     
+    @Test
+    public void testComa() {
+        try{
+            System.out.println("coma");
+            String a = "51";
+            String expResult = "51.";
+            String result = Calculadora.coma(a);
+            assertEquals(expResult, result);
+
+            a = "";
+            expResult = ".";
+            result = Calculadora.coma(a);
+            assertEquals(expResult, result);
+
+            a = "-788";
+            expResult = "-788.";
+            result = Calculadora.coma(a);
+            assertEquals(expResult, result);           
+        }
+        catch(Exception e){
+            e.printStackTrace();
+        }
+        
+        //Caso de prueba Excepcion
+        try{
+            String a = "521.12313";
+            String result = Calculadora.coma(a);            
+            assertTrue(false);
+        }
+        catch(ComaException e){
+            assertTrue(true);
+        }        
+    }
+    
+    @Test
+    public void testBack() throws NoMoreResultsException{
+        System.out.println("back");
+        Calculadora.clearStoredResults();
+        
+        float r1 = Calculadora.add(8, 99898);
+        float r2 = Calculadora.signo(-5);
+        float r3 = Calculadora.nFact(9);
+        float r4 = Calculadora.div(105, 8);
+        float r5 = Calculadora.multiply(109, 11);
+        
+        float expResult = Calculadora.back();
+        assertEquals(expResult, r5, 0.0);
+      
+        expResult = Calculadora.back();
+        assertEquals(expResult, r4, 0.0);
+        
+        expResult = Calculadora.back();
+        assertEquals(expResult, r3, 0.0);
+        
+        expResult = Calculadora.back();
+        assertEquals(expResult, r2, 0.0);
+        
+        expResult = Calculadora.back();
+        assertEquals(expResult, r1, 0.0);
+        try{
+            expResult = Calculadora.back();
+            assertTrue(false);
+        }
+        catch(NoMoreResultsException e){
+            assertTrue(true);
+        }
+        
+    }
+    
+    @Test
+    public void testClearSotredResults(){
+        System.out.println("clearStoredResults");
+        Calculadora.clearStoredResults();
+        try{
+            Calculadora.back();
+            assertTrue(false);
+        }
+        catch(NoMoreResultsException e){
+            assertTrue(true);
+        }
+        
+        Calculadora.add(5, 5);
+        Calculadora.multiply(5, 5);
+        Calculadora.div(5, 5);
+        Calculadora.clearStoredResults();
+        try{
+            Calculadora.back();
+            assertTrue(false);
+        }
+        catch(NoMoreResultsException e){
+            assertTrue(true);
+        }
+    }
 }

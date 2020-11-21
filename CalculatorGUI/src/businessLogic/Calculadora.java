@@ -28,13 +28,13 @@ public class Calculadora {
     public static float substract(float a, float b)
     {
         storeResult(a-b);
-        return a-b;
+        return a-b;        
     }
     
     public static float multiply(float a, float b)
     {
         storeResult(a*b);
-        return a*b;
+        return a*b;        
     }
     
     public static float div(float a, float b)
@@ -47,15 +47,19 @@ public class Calculadora {
         return a/b;
     }
     
-    public static String back()
+    public static void clearStoredResults(){
+        resultStack.clear();
+    }
+    
+    public static float back() throws NoMoreResultsException
     {
         
         if ( !resultStack.empty() ){
-            double res = resultStack.pop();
-            return res+"";
+            float res = resultStack.pop();
+            return res;
         }
         else{
-            return "";
+            throw new NoMoreResultsException();
         }
         
     }
@@ -85,9 +89,15 @@ public class Calculadora {
         return a*-1;
     }
     
-    public static char coma()
+    public static String coma(String texto) throws ComaException
     {
-        return ',';
+        if ( !texto.contains(".") ){
+            return texto + '.';    
+        }
+        else{
+            throw new ComaException();
+        }
+        
     }
     
     public static float tenPow(float a, float b)
@@ -137,5 +147,14 @@ public class Calculadora {
         }
         storeResult((float)Math.log10(a));
         return (float)Math.log10(a);
+    }
+    
+    public static float getLastResult() throws NoMoreResultsException{
+        if ( !resultStack.empty() ){
+            return resultStack.peek();
+        }
+        else{
+            throw new NoMoreResultsException();
+        }
     }
 }
